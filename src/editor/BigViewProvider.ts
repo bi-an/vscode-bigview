@@ -450,6 +450,11 @@ export class BigViewProvider implements vscode.CustomReadonlyEditorProvider<BigV
       void jsonTokenColors().then((json) => post({ type: 'theme', json }));
     };
 
+    const postSettings = (): void => {
+      const config = vscode.workspace.getConfiguration('bigview');
+      post({ type: 'settings', copyWithLineNumbers: config.get<boolean>('copyWithLineNumbers', true) });
+    };
+
     const postReveal = (line: number): void =>
       post({ type: 'reveal', line, viewIndex: search.viewIndexOfLine(line), mode: search.mode });
 
@@ -478,6 +483,7 @@ export class BigViewProvider implements vscode.CustomReadonlyEditorProvider<BigV
             lastTail = doc.tailGeneration;
             search.reset();
             post({ type: 'init', fileName: path.basename(doc.uri.fsPath), fileSize: doc.fileSize });
+            postSettings();
             postState();
             postTheme();
             if (pendingReveal !== undefined) postReveal(pendingReveal);
@@ -544,6 +550,7 @@ export class BigViewProvider implements vscode.CustomReadonlyEditorProvider<BigV
       vscode.window.onDidChangeActiveColorTheme(postTheme),
       vscode.workspace.onDidChangeConfiguration((e) => {
         if (e.affectsConfiguration('workbench.colorTheme') || e.affectsConfiguration('editor.tokenColorCustomizations')) postTheme();
+        if (e.affectsConfiguration('bigview.copyWithLineNumbers')) postSettings();
       }),
       doc.onDidReset(() => {
         search.reset();

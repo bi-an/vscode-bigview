@@ -48,6 +48,7 @@ Table view with a header row and resizable columns; matches are highlighted insi
 - **Whole-file search** — plain text, match case, whole word or regular expression, with streaming results, progress and a results panel
 - **Filter** — show only the matching lines, or invert to hide them; switching is instant
 - **Export** — write the filtered lines to a new file
+- **Copy with line numbers** — copying a selection in the main list prefixes each line with its file line number; can be turned off in settings
 - **Log files** — lines colored by level, timestamps recognized, time range filter
 - **JSON Lines** — syntax highlighting in the colors your theme uses for JSON, a details panel with fields and pretty-printed JSON, field filters like `level=error`
 - **CSV / TSV** — delimiter detection, header row, table view with resizable columns
@@ -95,6 +96,35 @@ The format is detected from the extension and the first lines of the file. Chang
 | `msg~timeout\|refused` | Field matches a regular expression |
 
 Click a field in the details panel to filter by its value.
+
+## Copy with Line Numbers
+
+When you select lines in the main list and copy them (`Ctrl+C` / `Cmd+C`, or the right-click **Copy**), every copied line is prefixed with its file line number, for example:
+
+```
+128. ERROR failed to connect
+129. WARN retrying in 5s
+```
+
+Whole lines are copied even when the selection only covers part of them, and in a filtered view each line keeps its real file line number. Copies made elsewhere (the search bar, the results panel, the details panel) are not affected.
+
+### Enabling / disabling
+
+The feature is **on by default**. To turn it off (and fall back to the plain copy):
+
+1. Open **Settings** — `Ctrl+,` / `Cmd+,`, or **File → Preferences → Settings**.
+2. Search for **`BigView: Copy With Line Numbers`**.
+3. Clear the checkbox to disable it, or tick it to enable it again.
+
+Or set it directly in `settings.json`:
+
+```jsonc
+{
+  "bigview.copyWithLineNumbers": false
+}
+```
+
+The change takes effect immediately — no reload needed. It can also be scoped to a workspace via the **Workspace** tab in Settings.
 
 ## Commands
 

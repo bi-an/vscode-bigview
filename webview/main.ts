@@ -78,6 +78,7 @@ const pendingResultBlocks = new Map<number, number>();
 let reqSeq = 0;
 let lineCount = 0;
 let fileSize = 0;
+let copyWithLineNumbers = true;
 let indexInfo: IndexMessage | undefined;
 let viewportTimer = 0;
 
@@ -690,6 +691,9 @@ window.addEventListener('message', (event: MessageEvent<HostToWebview>) => {
       fileSize = msg.fileSize;
       renderFileInfo();
       break;
+    case 'settings':
+      copyWithLineNumbers = msg.copyWithLineNumbers;
+      break;
     case 'index': {
       // tail -f: follow new lines if the last row was visible
       const follow = msg.tail && viewMode === 'all' && list.isAtEnd;
@@ -854,6 +858,7 @@ window.addEventListener('message', (event: MessageEvent<HostToWebview>) => {
  * bar, results list, details panel) fall through to the default behavior.
  */
 document.addEventListener('copy', (e) => {
+  if (!copyWithLineNumbers) return; // feature disabled: use the default copy behavior
   const sel = window.getSelection();
   if (!sel || sel.isCollapsed || sel.rangeCount === 0) return;
   const rows = list

@@ -9,6 +9,7 @@
 ### Features
 
 - Copy with Line Numbers — copied content includes line numbers prefixed to each line.
+- Setting `bigview.copyWithLineNumbers` (default on) to enable or disable prefixing copied lines with their file line numbers.
 
 ## 0.1.1
 
