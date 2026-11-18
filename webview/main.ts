@@ -870,7 +870,7 @@ document.addEventListener('copy', (e) => {
     const line = fileLineOfRow(r.index);
     const number = (line === undefined ? r.index : line) + 1;
     const text = lineCache.get(r.index)?.text ?? r.el.textContent ?? '';
-    return `${number}. ${text}`;
+    return `${number}:${text}`;
   });
   e.clipboardData?.setData('text/plain', lines.join('\n'));
   e.preventDefault();
