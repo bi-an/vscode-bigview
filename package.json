@@ -51,6 +51,11 @@
           "type": "boolean",
           "default": true,
           "description": "When copying selected lines from the main list, prefix each line with its file line number. When disabled, copying uses the default behavior."
+        },
+        "bigview.lineNumberSeparator": {
+          "type": "string",
+          "default": ":",
+          "description": "String placed between the line number and the line text when copying with line numbers (e.g. \":\", \" | \", \"\\t\")."
         }
       }
     },

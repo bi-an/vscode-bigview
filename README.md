@@ -124,6 +124,16 @@ Or set it directly in `settings.json`:
 }
 ```
 
+### Custom separator
+
+The string between the line number and the line text is configurable via `bigview.lineNumberSeparator` (default `":"`). It can be any string, e.g. `" | "` or a tab:
+
+```jsonc
+{
+  "bigview.lineNumberSeparator": " | "
+}
+```
+
 The change takes effect immediately — no reload needed. It can also be scoped to a workspace via the **Workspace** tab in Settings.
 
 ## Commands

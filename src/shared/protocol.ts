@@ -43,7 +43,7 @@ export type WebviewCommand = 'find' | 'findNext' | 'findPrevious' | 'toggleFilte
 export type HostToWebview =
   | { type: 'init'; fileName: string; fileSize: number }
   /** User settings; (re)sent on ready and whenever the relevant configuration changes. */
-  | { type: 'settings'; copyWithLineNumbers: boolean }
+  | { type: 'settings'; copyWithLineNumbers: boolean; lineNumberSeparator: string }
   | {
       type: 'index';
       /** Lines available for reading right now (grows while indexing). */

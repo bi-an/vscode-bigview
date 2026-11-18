@@ -10,6 +10,7 @@
 
 - Copy with Line Numbers — copied content includes line numbers prefixed to each line.
 - Setting `bigview.copyWithLineNumbers` (default on) to enable or disable prefixing copied lines with their file line numbers.
+- Setting `bigview.lineNumberSeparator` (default `":"`) to customize the string between the line number and the line text when copying.
 
 ## 0.1.1
 

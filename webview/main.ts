@@ -79,6 +79,7 @@ let reqSeq = 0;
 let lineCount = 0;
 let fileSize = 0;
 let copyWithLineNumbers = true;
+let lineNumberSeparator = ':';
 let indexInfo: IndexMessage | undefined;
 let viewportTimer = 0;
 
@@ -693,6 +694,7 @@ window.addEventListener('message', (event: MessageEvent<HostToWebview>) => {
       break;
     case 'settings':
       copyWithLineNumbers = msg.copyWithLineNumbers;
+      lineNumberSeparator = msg.lineNumberSeparator ?? ':';
       break;
     case 'index': {
       // tail -f: follow new lines if the last row was visible
@@ -870,7 +872,7 @@ document.addEventListener('copy', (e) => {
     const line = fileLineOfRow(r.index);
     const number = (line === undefined ? r.index : line) + 1;
     const text = lineCache.get(r.index)?.text ?? r.el.textContent ?? '';
-    return `${number}:${text}`;
+    return `${number}${lineNumberSeparator}${text}`;
   });
   e.clipboardData?.setData('text/plain', lines.join('\n'));
   e.preventDefault();

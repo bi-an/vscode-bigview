@@ -452,7 +452,11 @@ export class BigViewProvider implements vscode.CustomReadonlyEditorProvider<BigV
 
     const postSettings = (): void => {
       const config = vscode.workspace.getConfiguration('bigview');
-      post({ type: 'settings', copyWithLineNumbers: config.get<boolean>('copyWithLineNumbers', true) });
+      post({
+        type: 'settings',
+        copyWithLineNumbers: config.get<boolean>('copyWithLineNumbers', true),
+        lineNumberSeparator: config.get<string>('lineNumberSeparator', ':'),
+      });
     };
 
     const postReveal = (line: number): void =>
@@ -550,7 +554,7 @@ export class BigViewProvider implements vscode.CustomReadonlyEditorProvider<BigV
       vscode.window.onDidChangeActiveColorTheme(postTheme),
       vscode.workspace.onDidChangeConfiguration((e) => {
         if (e.affectsConfiguration('workbench.colorTheme') || e.affectsConfiguration('editor.tokenColorCustomizations')) postTheme();
-        if (e.affectsConfiguration('bigview.copyWithLineNumbers')) postSettings();
+        if (e.affectsConfiguration('bigview.copyWithLineNumbers') || e.affectsConfiguration('bigview.lineNumberSeparator')) postSettings();
       }),
       doc.onDidReset(() => {
         search.reset();
