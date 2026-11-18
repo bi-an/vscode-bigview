@@ -847,5 +847,29 @@ window.addEventListener('message', (event: MessageEvent<HostToWebview>) => {
   }
 });
 
+/**
+ * Copy with line numbers: when a selection in the main list is copied (Ctrl/Cmd+C or the context
+ * menu), prefix every selected row with its 1-based file line number. Only rendered rows can be
+ * selected, so this covers the lines the user actually sees and selects. Copies elsewhere (search
+ * bar, results list, details panel) fall through to the default behavior.
+ */
+document.addEventListener('copy', (e) => {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || sel.rangeCount === 0) return;
+  const rows = list
+    .textRows()
+    .filter((r) => sel.containsNode(r.el, true))
+    .sort((a, b) => a.index - b.index);
+  if (rows.length === 0) return; // the selection is not in the main list
+  const lines = rows.map((r) => {
+    const line = fileLineOfRow(r.index);
+    const number = (line === undefined ? r.index : line) + 1;
+    const text = lineCache.get(r.index)?.text ?? r.el.textContent ?? '';
+    return `${number}. ${text}`;
+  });
+  e.clipboardData?.setData('text/plain', lines.join('\n'));
+  e.preventDefault();
+});
+
 post({ type: 'ready' });
 if (saved.query && !isEmptyQuery(saved.query)) startSearch(saved.query, false);

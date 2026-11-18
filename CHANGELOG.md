@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.2
+
+### Changed
+
+- Add a new feature: Copy with Line Numbers.
+
+### Features
+
+- Copy with Line Numbers — copied content includes line numbers prefixed to each line.
+
 ## 0.1.1
 
 ### Changed

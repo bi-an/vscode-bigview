@@ -1,8 +1,8 @@
 {
   "name": "bigview",
   "displayName": "BigView",
-  "description": "View, search, filter and tail huge log, JSON Lines and CSV files (gigabytes) without loading them into memory.",
-  "version": "0.1.1",
+  "description": "View, search, filter and tail huge files, and copy selected lines with their file line numbers.",
+  "version": "0.1.2",
   "publisher": "fogio",
   "license": "MIT",
   "icon": "assets/icon.png",

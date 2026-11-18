@@ -215,6 +215,15 @@ export class VirtualList {
     this.schedule();
   }
 
+  /** Currently rendered text-row elements with their row index (for the copy handler). */
+  textRows(): Array<{ index: number; el: HTMLElement }> {
+    const out: Array<{ index: number; el: HTMLElement }> = [];
+    for (const row of this.rows) {
+      if (row.index >= 0 && !row.text.hidden) out.push({ index: row.index, el: row.text });
+    }
+    return out;
+  }
+
   focus(): void {
     this.view.focus({ preventScroll: true });
   }
